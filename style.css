@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+    font-family: 'Roboto',sans-serif;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    scroll-behavior: smooth;
+    /* overflow-y: hidden; */
+   
+}
+
+i{
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+}
+
+#ytLogo{
+    width: 90px;
+    
+}
+
+.head{
+    /* margin-top: 0px;
+    padding-top: 0px; */
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+    padding-left: 10px; 
+    background-color: rgba(0, 0, 0, 0.904);
+}
+
+.col1{
+    display: flex;
+    align-items: center;
+}
+.col2{
+    display: flex;
+    align-items: center;
+}
+.col3{
+    display: flex;
+    align-items: center;
+}
+.logo-img{
+    margin-left: 5px;
+   
+    
+}
+#searchBar{
+    height: 30px;
+    width: 500px;
+    padding-left: 10px;
+}
+.search, .mic{
+    
+    margin-right: 5px;
+   
+}
+.searchIcon{
+    color: black;
+}
+.mic{
+   
+    border-radius: 50%;
+    border: none;
+}
+.micicon{
+    /* background-color: rgb(39,39,39); */
+    color: black;
+    padding: 5px;
+    border-radius: 50%;
+}
+.icons3{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+/* -------------------- */
+/* aside */
+
+
+
+aside{
+    background-color: rgba(0, 0, 0, 0.904);
+    width: 400px;
+    height: 110vh;
+    overflow-y: scroll;
+
+}
+
+ul>li{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    padding-left: 20px;
+}
+
+ul>li>p{
+    color: white;
+    margin: 0px 30px;
+}
+
+hr{
+    border: 1px solid rgb(80, 74, 74);
+    width: 90%;
+    margin: 15px;
+}
+
+/* _______________________________ */
+
+/* topic-buttons */
+
+.aside_buttons{
+display: flex;
+}
+
+.topics{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+
+    align-items:start;
+    /* width: 88vw; */
+    height: fit-content;
+    background-color: black;
+}
+.topics>button{
+    width:fit-content;
+    padding: 8px;
+    border-radius: 10px;
+    background-color: rgb(99, 95, 95);
+    color: #fff;
+
+
+}
+
+/* _____________________ */
+
+
+
+.video-wrapper{
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px 20px;
+    padding: 20px 25px;
+    overflow-y: scroll;
+    background-color: black;
+}
+
+.video{
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+    height: 450px;
+    border: 1px solid #ccc;
+}
+
+.thumbnail{
+    object-fit: fill;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+   
+}
+.title{
+    color: #ccc;
+    font-size: 0.8rem;
+    
+    text-wrap: wrap;
+}
+.video-details{
+    display: flex;
+    color: #fff;
+}
+
+.channelLogo{
+    width: 40px;
+    margin: 5px;
+    border-radius: 50%;
+}

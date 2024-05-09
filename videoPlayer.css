@@ -1,0 +1,30 @@
+.videoPlayerContainer{
+    position: relative;
+    display: flex;
+    /* width: 70vw; */
+}
+#suggestedVideos{
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    /* width: 60vw !important; */
+    
+}
+
+.insuggestion-video-content{
+    display: flex;
+    border: 1px solid black;
+    box-sizing: border-box;
+    padding: 5px;
+}
+.insuggestion-thumbnail{
+    width: 150px;
+    height: 100px;
+    padding: 5px;
+}
+.insuggestion-views-time{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    /* margin: 5px; */
+}
