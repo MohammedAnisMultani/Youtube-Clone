@@ -1,13 +1,16 @@
 let suggestedVideos = document.getElementById('suggestedVideos')
 
 
-let API_kEY = "AIzaSyCxe6mfIZU8hWdd9vh_fkoCWHG7tvUzpJM"; //1
+// let API_kEY = "AIzaSyCxe6mfIZU8hWdd9vh_fkoCWHG7tvUzpJM"; //1
 // let API_kEY = "AIzaSyBsrwhNQYjwiangQNczdJpRCBZYB0dyanE"; //2
 // let API_kEY = "AIzaSyD88BLih4aU2iYAjZvM16B9KeXulJlh8yA"; //3
+// let API_kEY = "AIzaSyAHByvpyunb-S_hjrXgDuQ_-eqUvdMs5Js"; //4
+// let API_kEY="AIzaSyCu84T6TkQEWujC66c6-taGfS_YIxG--fs"; //5
+let API_kEY = "AIzaSyDzJb_0sCY3wvUPlTLV44YkUUhG2aUhnUg"; //6
 let baseURL = "https://www.googleapis.com/youtube/v3";
 
+let videoId = JSON.parse(localStorage.getItem("videoId"))
 window.addEventListener("load", () => {
-   let videoId = JSON.parse(localStorage.getItem("videoId"))
    async function getComments(videoId) {
     try{
     let response = await fetch(
@@ -20,6 +23,7 @@ window.addEventListener("load", () => {
     let data = await response.json();
     console.log(data)
     displayComments(data)
+    
   }
   catch(e){
     console.log(e)
@@ -48,19 +52,94 @@ window.addEventListener("load", () => {
       });
     }
   });
+
+  // ______________________________________
   
-  
-  function displayComments(data){
+  async function fetchChannelData(channelId) {
+    try {
+      let response = await fetch(
+        baseURL +
+          "/channels" +
+          `?key=${API_kEY}` +
+          "&part=snippet" +
+          `&id=${channelId}`
+      );
+      let data = await response.json();
+      return data.items[0];
+      // return data.items[0].snippet.thumbnails.default.url;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+
+  // ---------------------------------
+  //not just for comments 
+  // this also contains title,channelicon,buttons,likecounts etc
+  async function  displayComments(data){
     console.log(data)
     const commentSection = document.getElementById('commentSection');
+    //from this channelData we can find title, channelLogo
+    let channelDataPath = data.items[0].snippet.topLevelComment.snippet.channelId
+    let channelData = await fetchChannelData(channelDataPath)
+    console.log(channelData)
+    const channelLogo = channelData.snippet.thumbnails.default.url
+    const channelTitle = channelData.snippet.title
+    console.log(channelData)
+
+    //calling likeCount function
+    const statistics = await fetchVideoState(videoId,"statistics")
+    const likeCount = statistics.items[0].statistics.likeCount //--------->from here i need to start checking about likeCount
+    console.log(likeCount)
+    const topContainer = document.createElement("div") 
+    topContainer.innerHTML = `
+    <span>
+    <h2>${channelTitle}</h2>
+     <div>
+     <span><img src="${channelLogo}" alt=""></span>
+     <button>Subscribe</button>
+     <span>LikeCount: ${likeCount}</span>
+     <button>Share{icon}</button>
+     <button>Download</button>
+     <button>{icon ...}</button>
+
+     </div>
+     </span>
+     <h2>Top-Comments</h2>
+    `
+    
     for(let i=0; i<(data.items).length; i++){
+      const channelIdURL = data.items[i].snippet.channelId;
+      
+   
       const comment = document.createElement('p')
-      comment.innerHTML = `${data.items[i].snippet.topLevelComment.snippet.textDisplay}`
+      comment.classList.add('comments')
+      comment.innerHTML = `
+  
+     <div><span> ${data.items[i].snippet.topLevelComment.snippet.textDisplay}</span></div>
+      `
+      commentSection.prepend(topContainer)
       commentSection.append(comment)
     }
 
   }
-  
+  // -------------------------------------
+  // channel id
+  async function fetchChannelId(channelId) {
+    try {
+      let response = await fetch(
+        baseURL +
+          "/channels" +
+          `?key=${API_kEY}` +
+          "&part=snippet" +
+          `&id=${channelId}`
+      );
+      let data = await response.json();
+      return data.items[0].snippet.thumbnails.default.url;
+    } catch (e) {
+      console.log(e);
+    }
+  }
   // ----------------------------------------
     // bringing suggested videos in right corner with played video
     // contecting with #suggestedVideos
@@ -96,13 +175,14 @@ async function render(data) {
   for (let i = 0; i < data.items.length; i++) {
     // const channelIdURL = data.items[i].snippet.channelId;
     // let channelLogo = await fetchChannelLogo(channelIdURL);
+    // console.log(channelLogo)
     // -----------------------------------
     //fetching videoID
     const videoDetails = await fetchVideoState(data.items[i].id.videoId,"contentDetails"); // contentDetails
 
     console.log(videoDetails)
-    const durationISO = videoDetails.items[0].contentDetails.duration;
-    console.log(durationISO)
+    // const durationISO = videoDetails.items[0].contentDetails.duration;
+    // console.log(durationISO)
 
     //fetching statistics:
     const statistics = await fetchVideoState(data.items[i].id.videoId,"statistics");
@@ -146,7 +226,8 @@ async function render(data) {
      
       localStorage.setItem("videoId", JSON.stringify(videoId));
 
-      window.open("/videoPlayer.html");
+      // window.open("/videoPlayer.html"); // to open in a new tab
+      window.location.href = "/videoPlayer.html"
     });
 
 
@@ -182,8 +263,10 @@ async function fetchVideoState(videoId,typeOfDetails) {
         `&part=${typeOfDetails}`
     );
     const data = await response.json();
-
-    return (data)
+//directly finding like count
+console.log(data)
+return (data)
+    // return (data.items[0].statistics.likeCount)
   } catch (e) {
     return(e);
   }
@@ -191,7 +274,22 @@ async function fetchVideoState(videoId,typeOfDetails) {
 
 
 // ----------------------------------
-
+// async function fetchChannelLogo(channelId) {
+//   try {
+//     let response = await fetch(
+//       baseURL +
+//         "/channels" +
+//         `?key=${API_kEY}` +
+//         "&part=snippet" +
+//         `&id=${channelId}`
+//     );
+//     let data = await response.json();
+//     // return data.items[0];
+//     return data.items[0].snippet.thumbnails.default.url;
+//   } catch (e) {
+//     console.log(e);
+//   }
+// }
 // -----------------------------
 //converting the days ago string into a readable format
 //"2024-05-06T01:09:33Z"

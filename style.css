@@ -5,9 +5,12 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
     /* overflow-y: hidden; */
    
+}
+body{
+    overflow-y: hidden;
 }
 
 i{
@@ -86,10 +89,27 @@ i{
 aside{
     background-color: rgba(0, 0, 0, 0.904);
     width: 400px;
-    height: 110vh;
+    height: 95vh;
     overflow-y: scroll;
+    overflow-x: hidden;
 
 }
+::-webkit-scrollbar{
+    width: 8px;
+}
+::-webkit-scrollbar-track{
+    background-color: transparent;
+
+}
+::-webkit-scrollbar-thumb{
+    background-color: rgb(141, 125, 125);
+}
+/* ::-webkit-scrollbar-button{
+    background-color: white;
+}
+aside::-webkit-scrollbar-button{
+    background-color: transparent;
+} */
 
 ul>li{
     display: flex;
@@ -142,37 +162,90 @@ display: flex;
 
 
 .video-wrapper{
-    height: 100vh;
-    width: 100%;
+    height: 85vh;
+    width: 82vw;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px 20px;
+    gap: 10px 10px;
     padding: 20px 25px;
     overflow-y: scroll;
     background-color: black;
+  
 }
 
 .video{
     padding: 0px;
     margin: 0px;
+    height: 350px;
+    border-radius: 10px;
+    /* border: 1px solid #ccc; */
+    padding: 10px;
+}
+.video:hover{
+    box-shadow: 0px 0px 51px rgba(255, 255, 255, 0.276);
+    cursor: pointer;
+    transform: scale(1.01);
+
+}
+.video-content{
     position: relative;
-    height: 450px;
-    border: 1px solid #ccc;
 }
 
 .thumbnail{
     object-fit: fill;
-    height: 100%;
+    /* border: 1px solid salmon; */
+    height: 220px;
     width: 100%;
-    margin: 0px;
     padding: 0px;
-   
+    margin: 0px;
+    position: relative;
+    border-radius: 10px;
+    
+  
 }
+
+
 .title{
     color: #ccc;
-    font-size: 0.8rem;
-    
+    /* font-size: 0.8rem; */
+    font-weight: bolder;
     text-wrap: wrap;
+    /* border: 1px solid salmon; */
+    padding-right: 50px;
+    /* padding-top: 10px; */
+}
+
+.channel-name{
+   
+    font-size: small;
+    font-weight: lighter;
+    margin-top: 10px;
+}
+.timeStamp{
+    position: absolute;
+    /* border: 1px solid salmon; */
+    bottom: 35px;
+    right: 10px;
+    color: white;
+    background-color: #00000075;
+    padding: 3px;
+    font-size: small;
+    border-radius: 5px;
+
+}
+
+.views{
+    display: inline-block;
+    font-size: small;
+    font-weight: lighter;
+    margin-top: 5px;
+}
+
+.dayAgoTime{
+    display: inline-block;
+    font-size: small;
+    font-weight: lighter;
+    margin-top: 5px;
 }
 .video-details{
     display: flex;

@@ -2,9 +2,13 @@ let videocontent = document.querySelector(".video-content");
 let title = document.querySelector(".title");
 let videowrapper = document.querySelector(".video-wrapper");
 
-let API_kEY = "AIzaSyCxe6mfIZU8hWdd9vh_fkoCWHG7tvUzpJM"; //1
+// let API_kEY = "AIzaSyCxe6mfIZU8hWdd9vh_fkoCWHG7tvUzpJM"; //1
 // let API_kEY = "AIzaSyBsrwhNQYjwiangQNczdJpRCBZYB0dyanE"; //2
 // let API_kEY = "AIzaSyD88BLih4aU2iYAjZvM16B9KeXulJlh8yA"; //3
+// let API_kEY = "AIzaSyAHByvpyunb-S_hjrXgDuQ_-eqUvdMs5Js"; //4
+// let API_kEY="AIzaSyCu84T6TkQEWujC66c6-taGfS_YIxG--fs"; //5
+let API_kEY = "AIzaSyDzJb_0sCY3wvUPlTLV44YkUUhG2aUhnUg"; //6
+
 let baseURL = "https://www.googleapis.com/youtube/v3";
 
 async function fetchvideos(searchQuery, maxResults) {
@@ -32,6 +36,7 @@ async function render(data) {
   videowrapper.innerHTML = "";
   for (let i = 0; i < data.items.length; i++) {
     const channelIdURL = data.items[i].snippet.channelId;
+    //channel logo
     let channelLogo = await fetchChannelLogo(channelIdURL);
     // -----------------------------------
     //fetching videoID
@@ -83,7 +88,8 @@ async function render(data) {
      
       localStorage.setItem("videoId", JSON.stringify(videoId));
 
-      window.open("/videoPlayer.html");
+      // window.open("/videoPlayer.html"); //if want to open in a new tab
+      window.location.href = "/videoPlayer.html"
     });
 
 
@@ -93,17 +99,18 @@ async function render(data) {
 
     videos.innerHTML = `<div class="video-content">  
               <img src='${thumbnail}' alt="thumbnail" class="thumbnail" />
+              <span class="timeStamp">${timeStamp}</span>
               </div>
               <div class="video-details">
                 <div class="channel-logo">
                 <img class="channelLogo" src="${channelLogo}" alt="icon" class="channel-icon" />
                 </div>
                 <div class="detail">
-                  <h3 class="title">${data.items[i].snippet.title}</h3>
-                  <div class="channel-name">${data.items[i].snippet.channelTitle}</div>
-                  <div>${timeStamp}</div>
-                  <div>${daysAgoTime}</div>
-                  <div>${views}</div>
+                  <h4 class="title">${data.items[i].snippet.title}</h4>
+                  <p class="channel-name">${data.items[i].snippet.channelTitle}</p>
+                 
+                  <span class="views">${views} views</span>
+                  <span class="dayAgoTime">${daysAgoTime}</span>
                 </div>
               </div>`;
     videowrapper.append(videos);
@@ -158,7 +165,7 @@ let searchBar = document.getElementById('searchBar')
 searchBar.addEventListener('change',(e)=>{
 let input = e.target.value;
 console.log(input)
-fetchvideos(input, 5);
+fetchvideos(input, 20);
 })
 
 
