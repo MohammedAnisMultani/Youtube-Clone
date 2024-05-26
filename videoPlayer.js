@@ -4,9 +4,9 @@ let suggestedVideos = document.getElementById('suggestedVideos')
 // let API_kEY = "AIzaSyCxe6mfIZU8hWdd9vh_fkoCWHG7tvUzpJM"; //1
 // let API_kEY = "AIzaSyBsrwhNQYjwiangQNczdJpRCBZYB0dyanE"; //2
 // let API_kEY = "AIzaSyD88BLih4aU2iYAjZvM16B9KeXulJlh8yA"; //3
-// let API_kEY = "AIzaSyAHByvpyunb-S_hjrXgDuQ_-eqUvdMs5Js"; //4
+let API_kEY = "AIzaSyAHByvpyunb-S_hjrXgDuQ_-eqUvdMs5Js"; //4
 // let API_kEY="AIzaSyCu84T6TkQEWujC66c6-taGfS_YIxG--fs"; //5
-let API_kEY = "AIzaSyDzJb_0sCY3wvUPlTLV44YkUUhG2aUhnUg"; //6
+// let API_kEY = "AIzaSyDzJb_0sCY3wvUPlTLV44YkUUhG2aUhnUg"; //6
 let baseURL = "https://www.googleapis.com/youtube/v3";
 
 let videoId = JSON.parse(localStorage.getItem("videoId"))
@@ -84,7 +84,8 @@ window.addEventListener("load", () => {
     let channelData = await fetchChannelData(channelDataPath)
     console.log(channelData)
     const channelLogo = channelData.snippet.thumbnails.default.url
-    const channelTitle = channelData.snippet.title
+    let channelTitle = JSON.parse(localStorage.getItem("videoTitle"))
+    console.log(channelTitle)
     console.log(channelData)
 
     //calling likeCount function
@@ -95,28 +96,40 @@ window.addEventListener("load", () => {
     topContainer.innerHTML = `
     <span>
     <h2>${channelTitle}</h2>
-     <div>
-     <span><img src="${channelLogo}" alt=""></span>
+     <div class="videoTitleAndDetails">
+
+     <div class="leftSide">
+     <span><img class="videoChannelLogo" src="${channelLogo}" alt=""></span>
      <button>Subscribe</button>
+     </div>
+
+     <div class="rightSide">
      <span>LikeCount: ${likeCount}</span>
      <button>Share{icon}</button>
      <button>Download</button>
      <button>{icon ...}</button>
+     </div>
 
      </div>
      </span>
-     <h2>Top-Comments</h2>
+     <h2 class="top-comment">Top-Comments</h2>
     `
-    
+    //displaying comment
     for(let i=0; i<(data.items).length; i++){
       const channelIdURL = data.items[i].snippet.channelId;
-      
-   
+      const authorImage = data.items[i].snippet.topLevelComment.snippet.authorProfileImageUrl
+      const authorUserName = data.items[i].snippet.topLevelComment.snippet.authorDisplayName
       const comment = document.createElement('p')
       comment.classList.add('comments')
       comment.innerHTML = `
   
-     <div><span> ${data.items[i].snippet.topLevelComment.snippet.textDisplay}</span></div>
+     <div class="author-container">
+     <span><img class="author-image" src="${authorImage}" alt=""></span>
+    <div>
+    <h4>${authorUserName}}</h4>
+    <span class="author-comment-text"> ${data.items[i].snippet.topLevelComment.snippet.textDisplay}</span>
+    </div>
+     </div>
       `
       commentSection.prepend(topContainer)
       commentSection.append(comment)
@@ -164,7 +177,7 @@ async function fetchvideos(searchQuery, maxResults) {
   }
 }
 
-fetchvideos("All", 20);
+fetchvideos("All", 30);
 
 
 
@@ -238,7 +251,7 @@ async function render(data) {
     videos.innerHTML = `<div class="insuggestion-video-content">  
               <img src='${thumbnail}' alt="thumbnail" class="insuggestion-thumbnail" />
                 <div class="insuggestion-detail">
-                  <h3 class="insuggestion-title">${data.items[i].snippet.title}</h3>
+                  <h5 class="insuggestion-title">${data.items[i].snippet.title}</h5>
                   <div class="insuggestion-channel-name">${data.items[i].snippet.channelTitle}</div>
                  <div class="insuggestion-views-time">
                  

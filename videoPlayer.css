@@ -1,10 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: black;
+    color: white;
+}
+
 .videoPlayerContainer{
     position: relative;
     display: flex;
     /* width: 70vw; */
 }
 #suggestedVideos{
-    border: 1px solid red;
+    /* border: 1px solid red; */
+    /* background-color: black;
+    color: white; */
     display: flex;
     flex-direction: column;
     /* width: 60vw !important; */
@@ -18,8 +29,8 @@
     padding: 5px;
 }
 .insuggestion-thumbnail{
-    width: 150px;
-    height: 100px;
+    max-width: 150px;
+    max-height: 100px;
     padding: 5px;
 }
 .insuggestion-views-time{
@@ -28,15 +39,69 @@
     gap: 15px;
     /* margin: 5px; */
 }
+.insuggestion-title{
+    margin: 0px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
 
 /* _______________________- */
 /* commentSection */
 #commentSection{
-  
     padding: 20px;
     width: 60vw;
+}
+
+.top-comment{
+    padding-top: 40px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+}
+
+.author-container{
+    display: flex;
+    padding: 10px;
+}
+.author-image{
+    border-radius: 50%;
+    width: 40px;
+    margin-right: 20px;
+}
+.author-comment-text{
+    font-size: medium;
+}
+/* _____________________________ */
+/* channel name and details */
+
+.videoTitleAndDetails{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
 
 }
-.comments{
-   
+.videoChannelLogo{
+width: 55px;
+border-radius: 50%;
+}
+
+.leftSide{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.leftSide>button{
+    width: 100px;
+    height: 40px;
+    font-size: large;
+    font-weight: bold;
+    border-radius: 10px;
+}
+.rightSide>button{
+    width: 100px;
+    height: 40px;
+    font-size: large;
+    font-weight: bold;
+    border-radius: 10px;
 }

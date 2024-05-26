@@ -1,13 +1,14 @@
 let videocontent = document.querySelector(".video-content");
 let title = document.querySelector(".title");
 let videowrapper = document.querySelector(".video-wrapper");
+const toggleBtn = document.getElementById("toggle-button")
 
 // let API_kEY = "AIzaSyCxe6mfIZU8hWdd9vh_fkoCWHG7tvUzpJM"; //1
 // let API_kEY = "AIzaSyBsrwhNQYjwiangQNczdJpRCBZYB0dyanE"; //2
 // let API_kEY = "AIzaSyD88BLih4aU2iYAjZvM16B9KeXulJlh8yA"; //3
-// let API_kEY = "AIzaSyAHByvpyunb-S_hjrXgDuQ_-eqUvdMs5Js"; //4
+let API_kEY = "AIzaSyAHByvpyunb-S_hjrXgDuQ_-eqUvdMs5Js"; //4
 // let API_kEY="AIzaSyCu84T6TkQEWujC66c6-taGfS_YIxG--fs"; //5
-let API_kEY = "AIzaSyDzJb_0sCY3wvUPlTLV44YkUUhG2aUhnUg"; //6
+// let API_kEY = "AIzaSyDzJb_0sCY3wvUPlTLV44YkUUhG2aUhnUg"; //6
 
 let baseURL = "https://www.googleapis.com/youtube/v3";
 
@@ -33,6 +34,7 @@ fetchvideos("All", 20);
 
 
 async function render(data) {
+  console.log(data)
   videowrapper.innerHTML = "";
   for (let i = 0; i < data.items.length; i++) {
     const channelIdURL = data.items[i].snippet.channelId;
@@ -85,8 +87,11 @@ async function render(data) {
     
     videos.addEventListener("click", (e) => {
       let videoId = data.items[i].id.videoId;
-     
+      let videoTitle = data.items[i].snippet.title 
+      console.log(data)
+
       localStorage.setItem("videoId", JSON.stringify(videoId));
+      localStorage.setItem("videoTitle",JSON.stringify(videoTitle))
 
       // window.open("/videoPlayer.html"); //if want to open in a new tab
       window.location.href = "/videoPlayer.html"
@@ -129,7 +134,7 @@ async function fetchVideoState(videoId,typeOfDetails) {
         `&part=${typeOfDetails}`
     );
     const data = await response.json();
-
+    // console.log(data)
     return (data)
   } catch (e) {
     return(e);
@@ -150,6 +155,7 @@ async function fetchChannelLogo(channelId) {
         `&id=${channelId}`
     );
     let data = await response.json();
+    // console.log(data)
     return data.items[0].snippet.thumbnails.default.url;
   } catch (e) {
     console.log(e);
@@ -197,3 +203,10 @@ function viewCountFn(value){
   if(value >=1000) return `${(value/1000).toFixed(0)}K`
   return `${value}`
 }
+
+// -------------------------------
+//toggle theme logic
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+  document.body.classList.toggle("dark-mode");
+});

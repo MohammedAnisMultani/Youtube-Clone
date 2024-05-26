@@ -11,7 +11,10 @@
 }
 body{
     overflow-y: hidden;
+   background-color: black;
+   color: white;
 }
+
 
 i{
     font-size: 1.5rem;
@@ -257,3 +260,13 @@ display: flex;
     margin: 5px;
     border-radius: 50%;
 }
+/* ---------------------- */
+/* theme toggle */
+/* .dark-mode{
+    background-color: white;
+    color: black;
+} */
+/* body.light-mode {
+    background-color: white;
+    color: black;
+  } */
