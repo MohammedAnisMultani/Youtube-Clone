@@ -41,8 +41,8 @@ window.addEventListener("load", () => {
       // in which you want to render your video
       // 2nd is the object which has styles of your div
       new YT.Player("video-player", {
-        height: "500",
-        width: "1000",
+        height: "600",
+        width: "1200",
         videoId,
         events: {
           onReady: function (e) {
