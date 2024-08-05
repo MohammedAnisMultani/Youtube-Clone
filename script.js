@@ -205,8 +205,3 @@ function viewCountFn(value){
 }
 
 // -------------------------------
-//toggle theme logic
-toggleBtn.addEventListener("click", () => {
-  document.body.classList.toggle("light-mode");
-  document.body.classList.toggle("dark-mode");
-});
